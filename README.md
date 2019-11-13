@@ -54,6 +54,11 @@ Pass the path to the export directory, the path to the output directory as argum
 
 ## Development
 
+- The branch `master` is marked as protected
+    - Development should be done on the branch `dev` or similar, then merged into master via a pull request
+    - This workflow will help to ensure branch `master` remains always "deployable"    
+ 
+
 ### Conventions
 
 - JSON keys are **always** 
