@@ -1,6 +1,8 @@
 package exploratory;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -14,74 +16,56 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class PathTest {
 
+    private static final String SYSTEM_PATH_SEPARATOR = File.separator;
+
 
     @Test
-    public void printRootPath() {
-
+    public void printSystemSeparator() {
         System.out.println("File.separator = " + File.separator);
-        System.out.println("Paths.get(\"./\") = " + Paths.get("./"));
-        System.out.println("Paths.get(\"/\") = " + Paths.get("/"));
-        System.out.println("Paths.get(\"\\\\\") = " + Paths.get("\\"));
-        System.out.println("Paths.get(\".\\\\\") = " + Paths.get(".\\"));
-        System.out.println("Paths.get(File.separator) = " + Paths.get(File.separator));
-        System.out.println("Paths.get(\".\" + File.separator) = " + Paths.get("." + File.separator));
-
-        System.out.println();
-        System.out.println("== .toAbsolutePath() ==");
-        System.out.println("Paths.get(\"./\") = " + Paths.get("./").toAbsolutePath());
-        System.out.println("Paths.get(\"/\") = " + Paths.get("/").toAbsolutePath());
-        System.out.println("Paths.get(\"\\\\\") = " + Paths.get("\\").toAbsolutePath());
-        System.out.println("Paths.get(\".\\\\\") = " + Paths.get(".\\").toAbsolutePath());
-        System.out.println("Paths.get(File.separator) = " + Paths.get(File.separator).toAbsolutePath());
-        System.out.println("Paths.get(\".\" + File.separator) = " + Paths.get("." + File.separator).toAbsolutePath());
-
     }
 
 
-    @Test
-    public void testResourcesPathTest() {
+    @ParameterizedTest
+    @ValueSource(strings = { "./", ".\\" })
+    public void testCurrentDirPath(final String pathString) {
+        System.out.println("Paths.get(" + pathString + ") = " + Paths.get(pathString));
+    }
 
-        Path path;
 
-        System.out.println();
-        System.out.println("== Forward slashes ==");
-        path = Paths.get("src/test/resources");
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "src\\test\\resources",
+            "src\\test\\resources\\",
+            ".\\src\\test\\resources",
+            ".\\src\\test\\resources\\"
+    })
+    public void testResourcesPathTest_backSlash(final String pathString) {
+        final Path path = Paths.get(pathString);
+        System.out.println("pathString = " + pathString);
         System.out.println("path.toFile().exists() :: " + path.toFile().exists());
         assertTrue(path.toFile().exists());
+    }
 
-        path = Paths.get("src/test/resources/");
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "src/test/resources",
+            "src/test/resources/",
+            "./src/test/resources",
+            "./src/test/resources/"
+    })
+    public void testResourcesPathTest_forwardSlash(final String pathString) {
+        final Path path = Paths.get(pathString);
+        System.out.println("pathString = " + pathString);
         System.out.println("path.toFile().exists() :: " + path.toFile().exists());
         assertTrue(path.toFile().exists());
-
-        path = Paths.get("./src/test/resources");
-        System.out.println("path.toFile().exists() :: " + path.toFile().exists());
-        assertTrue(path.toFile().exists());
-
-        path = Paths.get("./src/test/resources/");
-        System.out.println("path.toFile().exists() :: " + path.toFile().exists());
-        assertTrue(path.toFile().exists());
+    }
 
 
-        System.out.println();
-        System.out.println("== Backslashes ==");
-
-        path = Paths.get("src\\test\\resources");
-        System.out.println("path.toFile().exists() :: " + path.toFile().exists());
-        assertTrue(path.toFile().exists());
-
-        path = Paths.get("src\\test\\resources\\");
-        System.out.println("path.toFile().exists() :: " + path.toFile().exists());
-        assertTrue(path.toFile().exists());
-
-        path = Paths.get(".\\src\\test\\resources");
-        System.out.println("path.toFile().exists() :: " + path.toFile().exists());
-        assertTrue(path.toFile().exists());
-
-        path = Paths.get(".\\src\\test\\resources\\");
-        System.out.println("path.toFile().exists() :: " + path.toFile().exists());
-        assertTrue(path.toFile().exists());
-
-
+    @ParameterizedTest
+    @ValueSource(strings = { "/", "\\" })
+    public void testRootPath(final String pathString) {
+        System.out.println("Paths.get(" + pathString + ") = " + Paths.get(pathString));
     }
 
 }
