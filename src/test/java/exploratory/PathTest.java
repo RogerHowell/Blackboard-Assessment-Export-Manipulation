@@ -28,6 +28,7 @@ public class PathTest {
     @ParameterizedTest
     @ValueSource(strings = { "./", ".\\" })
     public void testCurrentDirPath(final String pathString) {
+        System.out.println();
         System.out.println("Paths.get(" + pathString + ") = " + Paths.get(pathString));
     }
 
@@ -40,6 +41,7 @@ public class PathTest {
             ".\\src\\test\\resources\\"
     })
     public void testResourcesPathTest_backSlash(final String pathString) {
+        System.out.println();
         final Path path = Paths.get(pathString);
         System.out.println("pathString = " + pathString);
         System.out.println("path.toFile().exists() :: " + path.toFile().exists());
@@ -55,6 +57,7 @@ public class PathTest {
             "./src/test/resources/"
     })
     public void testResourcesPathTest_forwardSlash(final String pathString) {
+        System.out.println();
         final Path path = Paths.get(pathString);
         System.out.println("pathString = " + pathString);
         System.out.println("path.toFile().exists() :: " + path.toFile().exists());
@@ -65,7 +68,8 @@ public class PathTest {
     @ParameterizedTest
     @ValueSource(strings = { "/", "\\" })
     public void testRootPath(final String pathString) {
-        System.out.println("Paths.get(" + pathString + ") = " + Paths.get(pathString));
+        System.out.println();
+        System.out.println("Paths.get(\"" + pathString + "\") = " + Paths.get(pathString));
     }
 
 }
