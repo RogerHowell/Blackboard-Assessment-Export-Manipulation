@@ -66,3 +66,6 @@ Pass the path to the export directory, the path to the output directory as argum
     - all constructors 
     - all simple getters 
 
+- Avoid directly using `Paths.get` or similar in tests
+    - `TestUtil.testResourcePath` exists as a strongly suggested alternative
+
