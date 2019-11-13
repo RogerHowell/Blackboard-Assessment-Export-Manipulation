@@ -43,9 +43,9 @@ public class PathTest {
     public void testResourcesPathTest_backSlash(final String pathString) {
         System.out.println();
         final Path path = Paths.get(pathString);
-        System.out.println("pathString = " + pathString);
-        System.out.println("path.toFile().exists() :: " + path.toFile().exists());
-        assertTrue(path.toFile().exists());
+//        System.out.println("pathString = " + pathString);
+//        System.out.println("path.toFile().exists() :: " + path.toFile().exists());
+        assertTrue(path.toFile().exists(), "File expected to exist (but doesn't) at " + pathString + "(" + path.toAbsolutePath().toString() + ")");
     }
 
 
@@ -59,9 +59,9 @@ public class PathTest {
     public void testResourcesPathTest_forwardSlash(final String pathString) {
         System.out.println();
         final Path path = Paths.get(pathString);
-        System.out.println("pathString = " + pathString);
-        System.out.println("path.toFile().exists() :: " + path.toFile().exists());
-        assertTrue(path.toFile().exists());
+//        System.out.println("pathString = " + pathString);
+//        System.out.println("path.toFile().exists() :: " + path.toFile().exists());
+        assertTrue(path.toFile().exists(), "File expected to exist (but doesn't) at " + pathString + "(" + path.toAbsolutePath().toString() + ")");
     }
 
 
