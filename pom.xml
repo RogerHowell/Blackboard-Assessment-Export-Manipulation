@@ -18,6 +18,7 @@
 
     <dependencies>
 
+        <!-- License: Eclipse Public License v2.0 - https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine/5.5.2 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -25,18 +26,21 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- License: The Apache Software License, Version 2.0 - https://mvnrepository.com/artifact/org.everit.json/org.everit.json.schema/1.5.1 -->
         <dependency>
             <groupId>com.github.everit-org.json-schema</groupId>
             <artifactId>org.everit.json.schema</artifactId>
             <version>1.11.0</version>
         </dependency>
 
+        <!-- License: referred to as the JSON license (worded identically to the MIT license) - use without limitation, as long as the copyright notice is retained https://github.com/stleary/JSON-java/blob/master/LICENSE - https://mvnrepository.com/artifact/org.json/json/20190722 - http://json.org/license.html -->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20190722</version>
         </dependency>
 
+        <!-- License: The Apache Software License, Version 2.0 - https://mvnrepository.com/artifact/org.skyscreamer/jsonassert/1.5.0 -->
         <dependency>
             <groupId>org.skyscreamer</groupId>
             <artifactId>jsonassert</artifactId>
