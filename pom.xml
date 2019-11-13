@@ -27,11 +27,13 @@
         </dependency>
 
         <!-- License: The Apache Software License, Version 2.0 - https://mvnrepository.com/artifact/org.everit.json/org.everit.json.schema/1.5.1 -->
+        <!-- https://mvnrepository.com/artifact/org.everit.json/org.everit.json.schema -->
         <dependency>
-            <groupId>com.github.everit-org.json-schema</groupId>
+            <groupId>org.everit.json</groupId>
             <artifactId>org.everit.json.schema</artifactId>
-            <version>1.11.0</version>
+            <version>1.5.1</version>
         </dependency>
+
 
         <!-- License: referred to as the JSON license (worded identically to the MIT license) - use without limitation, as long as the copyright notice is retained https://github.com/stleary/JSON-java/blob/master/LICENSE - https://mvnrepository.com/artifact/org.json/json/20190722 - http://json.org/license.html -->
         <dependency>
