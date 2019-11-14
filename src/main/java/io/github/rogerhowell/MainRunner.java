@@ -1,5 +1,6 @@
 package io.github.rogerhowell;
 
+import io.github.rogerhowell.exceptions.ParameterValidationFailException;
 import io.github.rogerhowell.model.BbExportZip;
 
 import java.nio.file.Files;
@@ -11,11 +12,11 @@ public class MainRunner {
 
     public static void doProgram(final Path pathToZip, final Path dirToExportTo) {
         if (!Files.exists(pathToZip)) {
-            throw new IllegalArgumentException("Path to the zip file must exist.");
+            throw new ParameterValidationFailException("Path to the zip file must exist.");
         }
         if (Files.exists(dirToExportTo)) {
             // TODO: Make this overridable by a flag (currently playing safe to prevent accidental deletion/overwriting)
-            throw new IllegalArgumentException("Export dir already exists -- exiting to prevent changing/deletion of data.");
+            throw new ParameterValidationFailException("Export dir already exists -- exiting to prevent changing/deletion of data.");
         }
 
         // Flags
@@ -62,7 +63,7 @@ public class MainRunner {
     public static void main(final String[] args) {
         if (args == null || args.length == 0) {
             System.out.println("No command line arguments found.");
-            throw new IllegalArgumentException("No command line arguments found.");
+            throw new ParameterValidationFailException("No command line arguments found.");
         }
 
         if (args.length == 1 && args[0].equalsIgnoreCase("help")) {
@@ -86,12 +87,12 @@ public class MainRunner {
      */
     public static void runner(final String pathToZipString, final String dirToExportToString) {
         if (pathToZipString == null) {
-            throw new IllegalArgumentException("Path to the zip file must not be omitted.");
+            throw new ParameterValidationFailException("Path to the zip file must not be omitted.");
         }
 
         if (dirToExportToString == null) {
             // TODO: Make this optional
-            throw new IllegalArgumentException("Path to the export directory must not be omitted.");
+            throw new ParameterValidationFailException("Path to the export directory must not be omitted.");
         }
 
         final Path pathToZip     = Paths.get(pathToZipString);

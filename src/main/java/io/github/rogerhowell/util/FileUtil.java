@@ -1,5 +1,6 @@
 package io.github.rogerhowell.util;
 
+import io.github.rogerhowell.exceptions.ParameterValidationFailException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -145,16 +146,14 @@ public class FileUtil {
      */
     public static Path getRelativePathNormalised(final Path baseDirectory, final String pathString) {
         if (!Files.isDirectory(baseDirectory)) {
-            throw new IllegalArgumentException("Given path to the base directory MUST be a directory.");
+            throw new ParameterValidationFailException("Given path to the base directory MUST be a directory.");
         }
 
         try {
-            final Path newPathNormalised = Paths.get(baseDirectory.toString(), pathString).normalize();
-
-
-            final boolean isFileOutsideDir = !newPathNormalised.equals(baseDirectory) && !FileUtil.isFileWithinBaseDirectory(baseDirectory, newPathNormalised);
+            final Path    newPathNormalised = Paths.get(baseDirectory.toString(), pathString).normalize();
+            final boolean isFileOutsideDir  = !newPathNormalised.equals(baseDirectory) && !FileUtil.isFileWithinBaseDirectory(baseDirectory, newPathNormalised);
             if (isFileOutsideDir) {
-                throw new IllegalArgumentException(
+                throw new ParameterValidationFailException(
                         "Given path MUST resolve to being within the given base directory." +
                         "\n - Base Dir: " + baseDirectory.toString() +
                         "\n - Given path: " + pathString +
@@ -221,7 +220,7 @@ public class FileUtil {
             final String contents = FileUtil.getFileContentsAsString(path);
             return new JSONObject(contents);
         } catch (final IOException e) {
-            throw new IllegalArgumentException(
+            throw new ParameterValidationFailException(
                     "Given path to json file could not be accessed " +
                     "(perhaps missing, invalid permissions, or not relative to the resource root?)",
                     e
@@ -238,17 +237,17 @@ public class FileUtil {
      */
     public static List<Path> listDirContents(final Path dirPath) {
         if (dirPath == null) {
-            throw new IllegalArgumentException("Directory contents not found - The given directory is null.");
+            throw new ParameterValidationFailException("Directory contents not found - The given directory is null.");
         }
         if (!FileUtil.fileExistsOnDisk(dirPath)) {
-            throw new IllegalArgumentException("Directory contents not found - The given directory does not exist on disk.");
+            throw new ParameterValidationFailException("Directory contents not found - The given directory does not exist on disk.");
         }
 
         // "Returns null if this abstract pathname does not denote a directory, or if an I/O error occurs."
         final File[] dirFileContents = dirPath.toFile().listFiles();
         if (dirFileContents == null) {
             // Test done above for null/non-existent directory, thus presume an IO error.
-            throw new IllegalArgumentException("Directory contents not found - Already checked for a null/non-existent dir, thus this is likely due to an I/O error of unknown type.");
+            throw new ParameterValidationFailException("Directory contents not found - Already checked for a null/non-existent dir, thus this is likely due to an I/O error of unknown type.");
         }
 
         return Stream.of(dirFileContents)

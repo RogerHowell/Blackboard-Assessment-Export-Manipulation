@@ -1,6 +1,8 @@
 package io.github.rogerhowell.util;
 
 
+import io.github.rogerhowell.exceptions.ParameterValidationFailException;
+
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -107,9 +109,9 @@ public class BbExtractionUtil {
         final boolean matchFound = matcher.matches();
 
         if (input != null && !matchFound) {
-            throw new IllegalArgumentException("Input doesn't match the required pattern. -- " +
-                                               "\n - Pattern: " + regex +
-                                               "\n - Input:   " + input);
+            throw new ParameterValidationFailException("Input doesn't match the required pattern. -- " +
+                                                       "\n - Pattern: " + regex +
+                                                       "\n - Input:   " + input);
         }
 
         return matcher;
