@@ -17,22 +17,25 @@ This project will take zip file, unzip it, and then rearrange the contents into 
  
 ```
 \ Output container directory
+
 |-\ Module Code
-|-|-\ Task Name
-|-|-|-\ Student ID
-|-|-|-|-\ Submission Info (e.g. timestamp)
+|-|-\ Cohort Code
+|-|-|-\ Task Name
+|-|-|-|-\ Student ID
 
-|-|-|-|-|-\ Metadata
-|-|-|-|-|-| - <Submisison description file (as provided by Blackboard)>.txt
-|-|-|-|-|-| - <Submisison description file (generated using this project)>.json
-|-|-|-|-|-| - <Submisison field (if present in the description file)>.txt
-|-|-|-|-|-| - <Submisison comments (if present in the description file)>.txt
+|-|-|-|-|-\ Submission Folder (named using e.g. submission timestamp)
 
-|-|-|-|-|-\ Submitted Files
-|-|-|-|-|-| - <placeholder>.java
-|-|-|-|-|-| - <placeholder>.pde
-|-|-|-|-|-| - <placeholder>.pdf
-|-|-|-|-|-| - <placeholder>.txt
+|-|-|-|-|-|-\ Metadata
+|-|-|-|-|-|-| - <Submisison description file (as provided by Blackboard)>.txt
+|-|-|-|-|-|-| - <Submisison description file (generated using this project)>.json
+|-|-|-|-|-|-| - <Submisison field (if present in the description file)>.txt
+|-|-|-|-|-|-| - <Submisison comments (if present in the description file)>.txt
+
+|-|-|-|-|-|-\ Submitted Files
+|-|-|-|-|-|-| - <placeholder>.java
+|-|-|-|-|-|-| - <placeholder>.pde
+|-|-|-|-|-|-| - <placeholder>.pdf
+|-|-|-|-|-|-| - <placeholder>.txt
 
 ```
  
