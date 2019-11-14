@@ -74,3 +74,6 @@ Pass the path to the export directory, the path to the output directory as argum
 - Avoid directly using `Paths.get` or similar in tests
     - `TestUtil.testResourcePath` exists as a strongly suggested alternative
 
+- Always use forward slash (`/`) as a directory separator 
+    - Backslash (`\`) is NOT cross-OS compatible (doesn't work on Linux systems - maybe includes MacOS?) 
+
