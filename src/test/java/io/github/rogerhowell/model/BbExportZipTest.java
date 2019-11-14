@@ -16,7 +16,7 @@ public class BbExportZipTest {
 
 
     @Test
-    public void constructorTest_basicPath() {
+    public void test_constructor_basicPath() {
         final Path        path     = testResourcePath("/");
         final BbExportZip bbExport = new BbExportZip(path, false);
 
@@ -25,14 +25,14 @@ public class BbExportZipTest {
 
 
     @Test
-    public void constructorTest_null() {
+    public void test_constructor_null() {
         final BbExportZip bbExport = new BbExportZip(null, false);
         assertNull(bbExport.getPath());
     }
 
 
     @Test
-    public void constructorTest_verifyFileExists_existingFile() {
+    public void test_constructor_verifyFileExists_existingFile() {
         final String pathString = "empty_zip/gradebook_2019_CS9999_Empty20Task_2019-11-08-21-41-57.zip";
         final Path   path       = testResourcePath(pathString);
 
@@ -80,7 +80,7 @@ public class BbExportZipTest {
 
 
     @Test
-    public void constructorTest_verifyFileExists_nonExistentFile() {
+    public void test_constructor_verifyFileExists_nonExistentFile() {
         final String pathString = "/non-existent.zip";
         final Path   path       = testResourcePath(pathString);
 

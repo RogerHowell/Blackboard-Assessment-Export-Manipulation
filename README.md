@@ -61,12 +61,24 @@ Pass the path to the export directory, the path to the output directory as argum
 
 ### Conventions
 
+This section defines the conventions used within this project.
+
+Updates will be added on an ongoing/rolling basis as and when they are deliberately considered. 
+
+This represents an "ideal" goal, and does not necessarily represent the conventions _actually_ used within this codebase. 
+Any deviances should be corrected during normal development/refactoring.
+
+#### Naming
+
 - JSON keys are **always** 
     - In lowercase `snake_case` (as opposed to `camelCase`)
    
 - Variable names used within code 
     - Should be `camelCase`.
    
+   
+#### Tests
+
 - Each model object must have unit tests for 
     - all constructors 
     - all simple getters 
@@ -77,3 +89,15 @@ Pass the path to the export directory, the path to the output directory as argum
 - Always use forward slash (`/`) as a directory separator 
     - Backslash (`\`) is NOT cross-OS compatible (doesn't work on Linux systems - maybe includes MacOS?) 
 
+- Test cases will normally have the following components, separated by an underscore (`_`)
+    - First - the type of `@Test` to be rune
+        - `test` (if the test performs assertions), 
+        - `info` (if purely informational -- i.e. just print to the console, or `assumeTrue`/`assumeFalse` or similar)
+    
+    - Middle - the component
+        - The component/element under test 
+        - Examples: `constructor`, or `toJson`
+        
+    - Last - differentiation of inputs/scenarios
+        - Detail about the input/scenario
+        - Examples: `nullParameter(s)`, or `existingFile`, or `edgeOfBounds`, or `outOfBounds`

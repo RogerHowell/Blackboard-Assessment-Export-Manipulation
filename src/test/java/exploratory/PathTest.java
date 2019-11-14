@@ -46,7 +46,7 @@ public class PathTest {
             ".\\src\\test\\resources",
             ".\\src\\test\\resources\\"
     })
-    public void testResourcesPathTest_backSlash(final String pathString) {
+    public void test_ResourcesPath_backSlash(final String pathString) {
         final Path path = Paths.get(pathString);
         assumeTrue(
                 path.toFile().exists(),
@@ -64,7 +64,7 @@ public class PathTest {
             "./src/test/resources",
             "./src/test/resources/"
     })
-    public void testResourcesPathTest_forwardSlash(final String pathString) {
+    public void test_resourcesPath_forwardSlash(final String pathString) {
         final Path path = Paths.get(pathString);
         assumeTrue(
                 path.toFile().exists(),
