@@ -8,7 +8,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 
 /**
@@ -20,37 +20,41 @@ public class PathTest {
 
 
     @Test
-    public void printSystemSeparator() {
+    public void info_printSystemSeparator() {
         System.out.println("File.separator = " + File.separator);
     }
 
 
     @ParameterizedTest
     @ValueSource(strings = { "./", ".\\" })
-    public void testCurrentDirPath(final String pathString) {
-        System.out.println();
+    public void info_testCurrentDirPath(final String pathString) {
         System.out.println("Paths.get(" + pathString + ") = " + Paths.get(pathString));
     }
 
 
-//    @ParameterizedTest
-//    @ValueSource(strings = {
-//            "src\\test\\resources",
-//            "src\\test\\resources\\",
-//            ".\\src\\test\\resources",
-//            ".\\src\\test\\resources\\"
-//    })
-//    public void testResourcesPathTest_backSlash(final String pathString) {
-//        final Path path = Paths.get(pathString);
-////        System.out.println("pathString = " + pathString);
-////        System.out.println("path.toFile().exists() :: " + path.toFile().exists());
-//        assertTrue(
-//                path.toFile().exists(),
-//                "File expected to exist (but doesn't) " +
-//                "\n - pathString:   " + pathString + "" +
-//                "\n - absolutePath: " + path.toAbsolutePath().toString()
-//        );
-//    }
+    @ParameterizedTest
+    @ValueSource(strings = { "/", "\\" })
+    public void info_testRootPath(final String pathString) {
+        System.out.println("Paths.get(\"" + pathString + "\") = " + Paths.get(pathString));
+    }
+
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "src\\test\\resources",
+            "src\\test\\resources\\",
+            ".\\src\\test\\resources",
+            ".\\src\\test\\resources\\"
+    })
+    public void testResourcesPathTest_backSlash(final String pathString) {
+        final Path path = Paths.get(pathString);
+        assumeTrue(
+                path.toFile().exists(),
+                "File expected to exist (but doesn't) " +
+                "\n - pathString:   " + pathString + "" +
+                "\n - absolutePath: " + path.toAbsolutePath().toString()
+        );
+    }
 
 
     @ParameterizedTest
@@ -62,22 +66,12 @@ public class PathTest {
     })
     public void testResourcesPathTest_forwardSlash(final String pathString) {
         final Path path = Paths.get(pathString);
-//        System.out.println("pathString = " + pathString);
-//        System.out.println("path.toFile().exists() :: " + path.toFile().exists());
-        assertTrue(
+        assumeTrue(
                 path.toFile().exists(),
                 "File expected to exist (but doesn't) " +
                 "\n - pathString:   " + pathString + "" +
                 "\n - absolutePath: " + path.toAbsolutePath().toString()
         );
-    }
-
-
-    @ParameterizedTest
-    @ValueSource(strings = { "/", "\\" })
-    public void testRootPath(final String pathString) {
-        System.out.println();
-        System.out.println("Paths.get(\"" + pathString + "\") = " + Paths.get(pathString));
     }
 
 }
