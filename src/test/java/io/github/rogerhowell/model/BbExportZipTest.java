@@ -20,32 +20,6 @@ public class BbExportZipTest {
 
 
     @Test
-    public void info_schemaValidation_getSchema() {
-
-        final Path        path     = testResourcePath("/");
-        final BbExportZip bbExport = new BbExportZip(path, true);
-
-        final Schema     schema     = bbExport.getSchema();
-        final JSONObject jsonObject = bbExport.toJson();
-
-        System.out.println("bbExport.getSchema() = " + bbExport.getSchema().toString());
-
-        try {
-            // Do validation
-            schema.validate(jsonObject);
-
-            // Try to get some info out?
-            final String string = schema.toString();
-            System.out.println("string = " + string);
-
-        } catch (final ValidationException e) {
-            System.out.println(e.getMessage());
-        }
-
-    }
-
-
-    @Test
     public void test_constructor_basicPath() {
         final Path        path     = testResourcePath("/");
         final BbExportZip bbExport = new BbExportZip(path, false);
@@ -128,6 +102,27 @@ public class BbExportZipTest {
                     "\n - pathString:   " + pathString +
                     "\n - absolutePath: " + path.toAbsolutePath().toString()
         );
+    }
+
+
+    @Test
+    public void test_schemaValidation_getSchema() {
+        final Path        path     = testResourcePath("/");
+        final BbExportZip bbExport = new BbExportZip(path, true);
+
+        final Schema     schema     = bbExport.getSchema();
+        final JSONObject jsonObject = bbExport.toJson();
+
+        try {
+            schema.validate(jsonObject);
+        } catch (final ValidationException e) {
+            fail("ERROR: Schema validation failed with message: " +
+                 "\n - Message: " + e.getMessage() +
+                 "\n - Child Messages: " +
+                 "\n     - " + String.join("\n     - ", e.getAllMessages()) +
+                 ""
+            );
+        }
     }
 
 
