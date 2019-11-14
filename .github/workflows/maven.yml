@@ -1,17 +1,18 @@
-name: Java CI
+name: Compile, test, and package (using Maven)
 
 on: [push]
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         java: [ '8', '11', '13' ]
+        os: [ ubuntu-latest, windows-latest ]
 
-    name: Build and run/test on ${{ matrix.java }}
+    name: Build and run/test on ${{ matrix.os }} with ${{ matrix.java }}
 
     steps:
       - uses: actions/checkout@v1
