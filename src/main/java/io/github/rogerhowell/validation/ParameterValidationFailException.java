@@ -1,4 +1,4 @@
-package io.github.rogerhowell.exceptions;
+package io.github.rogerhowell.validation;
 
 public class ParameterValidationFailException extends IllegalArgumentException {
 

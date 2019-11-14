@@ -1,7 +1,7 @@
 package io.github.rogerhowell.util;
 
 
-import io.github.rogerhowell.exceptions.ParameterValidationFailException;
+import io.github.rogerhowell.validation.ParameterValidationFailException;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;

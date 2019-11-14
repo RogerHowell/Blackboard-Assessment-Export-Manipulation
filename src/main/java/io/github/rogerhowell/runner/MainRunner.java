@@ -1,7 +1,7 @@
 package io.github.rogerhowell.runner;
 
-import io.github.rogerhowell.exceptions.ParameterValidationFailException;
 import io.github.rogerhowell.model.BbExportZip;
+import io.github.rogerhowell.validation.ParameterValidationFailException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

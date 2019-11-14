@@ -1,7 +1,7 @@
 package io.github.rogerhowell.model;
 
-import io.github.rogerhowell.exceptions.ParameterValidationFailException;
 import io.github.rogerhowell.testing.JsonableTest;
+import io.github.rogerhowell.validation.ParameterValidationFailException;
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.ValidationException;
 import org.json.JSONObject;
@@ -19,14 +19,14 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class BbExportZipTest implements JsonableTest {
 
-    private static final String FILE_PATH_EMPTY_ZIP        = "empty_zip/gradebook_2019_CS9999_Empty20Task_2019-11-08-21-41-57.zip";
-    private static final String FILE_PATH_NON_EXISTENT_ZIP = "NON-EXISTING-DIR/gradebook_2019_CS9999_Empty20Task_2019-11-08-21-41-57.zip";
-    private static final String FILE_PATH_INVALID_FILENAME = "NON-EXISTING-DIR/invalid_filename.zip";
+    public static final String FILE_PATH_EMPTY_ZIP                     = "empty_zip/gradebook_2019_CS9999_Empty20Task_2019-11-08-21-41-57.zip";
+    public static final String FILE_PATH_NON_EXISTENT_ZIP              = "NON-EXISTING-DIR/gradebook_2019_CS9999_Empty20Task_2019-11-08-21-41-57.zip";
+    public static final String FILE_PATH_INVALID_NON_EXISTENT_FILENAME = "NON-EXISTING-DIR/invalid_filename.zip";
 
 
     @Test
     public void test_constructor_basicInvalidPath() {
-        final Path path = resourcePathTest(BbExportZipTest.FILE_PATH_INVALID_FILENAME);
+        final Path path = resourcePathTest(BbExportZipTest.FILE_PATH_INVALID_NON_EXISTENT_FILENAME);
 
         boolean isValid = true;
         try {

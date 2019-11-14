@@ -1,9 +1,9 @@
 package io.github.rogerhowell.model;
 
 import io.github.rogerhowell.Jsonable;
-import io.github.rogerhowell.exceptions.ParameterValidationFailException;
 import io.github.rogerhowell.util.BbExtractionUtil;
 import io.github.rogerhowell.util.FileUtil;
+import io.github.rogerhowell.validation.Validation;
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.loader.SchemaLoader;
 import org.json.JSONObject;
@@ -34,19 +34,13 @@ public class BbExportZip implements Jsonable {
 
 
     public BbExportZip(final Path path, final boolean verifyFileExists) {
-        if (path == null) {
-            throw new ParameterValidationFailException("Path must not be null.");
-        }
+        Validation.DISALLOW_NULL.validate(path);
+        Validation.DISALLOW_NULL.validate(verifyFileExists);
 
-        this.isFileExistenceChecked = false;
         if (verifyFileExists) {
-            if (!Files.exists(path)) {
-                throw new ParameterValidationFailException("Flag to verify file existence set to true, and file not found at the given path: " + path.toString());
-            } else {
-                this.isFileExistenceChecked = true;
-            }
+            Validation.FILE_MUST_EXIST.validate(path);
+            this.isFileExistenceChecked = true;
         }
-
 
         final String filename = path.getFileName().toString();
 

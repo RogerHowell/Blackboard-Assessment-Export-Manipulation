@@ -1,6 +1,6 @@
 package io.github.rogerhowell.util;
 
-import io.github.rogerhowell.exceptions.ParameterValidationFailException;
+import io.github.rogerhowell.validation.ParameterValidationFailException;
 import org.json.JSONObject;
 
 import java.io.File;
