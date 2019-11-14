@@ -26,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Reduced target Java version to Java 8
 
+- Added Github actions to run tests using a matrix of Windows/Ubuntu/MacOS, with Java 8/11/13 
+
 
 ## [[0.0.1]] - 2019.11.13
 
