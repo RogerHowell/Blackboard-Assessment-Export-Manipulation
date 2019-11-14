@@ -1,6 +1,7 @@
 package io.github.rogerhowell.model;
 
 import io.github.rogerhowell.exceptions.ParameterValidationFailException;
+import io.github.rogerhowell.testing.JsonableTest;
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.ValidationException;
 import org.json.JSONObject;
@@ -16,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class BbExportZipTest {
+public class BbExportZipTest implements JsonableTest {
 
     private static final String FILE_PATH_EMPTY_ZIP        = "empty_zip/gradebook_2019_CS9999_Empty20Task_2019-11-08-21-41-57.zip";
     private static final String FILE_PATH_NON_EXISTENT_ZIP = "NON-EXISTING-DIR/gradebook_2019_CS9999_Empty20Task_2019-11-08-21-41-57.zip";
@@ -48,7 +49,7 @@ public class BbExportZipTest {
 
 
     @Test
-    public void test_constructor_null() {
+    public void test_constructor_nullPath() {
         final Path path = null;
 
         boolean isValid = true;
@@ -106,8 +107,9 @@ public class BbExportZipTest {
     }
 
 
+    @Override
     @Test
-    public void test_schemaValidation_getSchema() {
+    public void test_getSchema_nonNullReturn() {
         final Path        path     = resourcePathTest(BbExportZipTest.FILE_PATH_EMPTY_ZIP);
         final BbExportZip bbExport = new BbExportZip(path, true);
 
@@ -117,8 +119,9 @@ public class BbExportZipTest {
     }
 
 
+    @Override
     @Test
-    public void test_schemaValidation_schemaExecutes() {
+    public void test_getSchema_schemaExecutesWithoutError() {
         final Path        path     = resourcePathTest(BbExportZipTest.FILE_PATH_EMPTY_ZIP);
         final BbExportZip bbExport = new BbExportZip(path, true);
 
@@ -135,6 +138,16 @@ public class BbExportZipTest {
                  ""
             );
         }
+    }
+
+
+    @Override
+    public void test_toJson_nonNullReturn() {
+        final Path        path       = resourcePathTest(BbExportZipTest.FILE_PATH_EMPTY_ZIP);
+        final BbExportZip bbExport   = new BbExportZip(path, true);
+        final JSONObject  jsonObject = bbExport.toJson();
+
+        assertNotNull(jsonObject);
     }
 
 
