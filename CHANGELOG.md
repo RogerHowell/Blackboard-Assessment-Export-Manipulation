@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [#8] Added a flag to do file existence check for the path provided to the constructor of `BbExportZip`
 
-- 
+- Reduced target Java version to Java 8
 
 
 ## [[0.0.1]] - 2019.11.13
