@@ -1,5 +1,6 @@
 package io.github.rogerhowell.model;
 
+import io.github.rogerhowell.exceptions.ParameterValidationException;
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.ValidationException;
 import org.json.JSONObject;
@@ -12,7 +13,6 @@ import java.nio.file.Path;
 import static io.github.rogerhowell.util.FileUtil.resourcePathTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -21,7 +21,7 @@ public class BbExportZipTest {
 
     @Test
     public void test_constructor_basicPath() {
-        final Path        path     = resourcePathTest("/");
+        final Path        path     = resourcePathTest("empty_zip/gradebook_2019_CS9999_Empty20Task_2019-11-08-21-41-57.zip");
         final BbExportZip bbExport = new BbExportZip(path, false);
 
         assertEquals(path, bbExport.getPath());
@@ -30,8 +30,16 @@ public class BbExportZipTest {
 
     @Test
     public void test_constructor_null() {
-        final BbExportZip bbExport = new BbExportZip(null, false);
-        assertNull(bbExport.getPath());
+        final Path path = null;
+
+        boolean isValid = true;
+        try {
+            new BbExportZip(path, false);
+        } catch (final ParameterValidationException e) {
+            isValid = false;
+        }
+
+        assertFalse(isValid);
     }
 
 
@@ -107,7 +115,7 @@ public class BbExportZipTest {
 
     @Test
     public void test_schemaValidation_getSchema() {
-        final Path        path     = resourcePathTest("/");
+        final Path        path     = resourcePathTest("empty_zip/gradebook_2019_CS9999_Empty20Task_2019-11-08-21-41-57.zip");
         final BbExportZip bbExport = new BbExportZip(path, true);
 
         final Schema     schema     = bbExport.getSchema();
@@ -128,11 +136,11 @@ public class BbExportZipTest {
 
     @Test
     public void test_toJson_genericFileVerifyFalse() {
-        final Path        path     = resourcePathTest("/");
+        final Path        path     = resourcePathTest("empty_zip/gradebook_2019_CS9999_Empty20Task_2019-11-08-21-41-57.zip");
         final BbExportZip bbExport = new BbExportZip(path, false);
 
         final String expected = "{\n" +
-                                "  \"path\": \"src/test/resources/\",\n" +
+                                "  \"path\": \"src/test/resources/empty_zip/gradebook_2019_CS9999_Empty20Task_2019-11-08-21-41-57.zip\",\n" +
                                 "  \"file_exists\": true,\n" +
                                 "  \"is_file_existence_checked\": false\n" +
                                 "}";
@@ -144,11 +152,11 @@ public class BbExportZipTest {
 
     @Test
     public void test_toJson_genericFileVerifyTrue() {
-        final Path        path     = resourcePathTest("/");
+        final Path        path     = resourcePathTest("empty_zip/gradebook_2019_CS9999_Empty20Task_2019-11-08-21-41-57.zip");
         final BbExportZip bbExport = new BbExportZip(path, true);
 
         final String expected = "{\n" +
-                                "  \"path\": \"src/test/resources/\",\n" +
+                                "  \"path\": \"src/test/resources/empty_zip/gradebook_2019_CS9999_Empty20Task_2019-11-08-21-41-57.zip\",\n" +
                                 "  \"file_exists\": true,\n" +
                                 "  \"is_file_existence_checked\": true\n" +
                                 "}";

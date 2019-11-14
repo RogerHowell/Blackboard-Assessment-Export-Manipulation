@@ -122,14 +122,14 @@ public class FileUtilTest {
     }
 
 
-    @ParameterizedTest
-    @ValueSource(strings = {
-            "/",
-            "/src/test/resources/",
-    })
-    public void info_pathParts_withLeadingSlash(final String pathString) {
-        this.doTestPathString(pathString);
-    }
+//    @ParameterizedTest
+//    @ValueSource(strings = {
+//            "/",
+//            "/src/test/resources/",
+//    })
+//    public void info_pathParts_withLeadingSlash(final String pathString) {
+//        this.doTestPathString(pathString);
+//    }
 
 
     @ParameterizedTest

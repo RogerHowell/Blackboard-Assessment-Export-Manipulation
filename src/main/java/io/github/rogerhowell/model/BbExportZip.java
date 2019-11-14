@@ -1,6 +1,8 @@
 package io.github.rogerhowell.model;
 
 import io.github.rogerhowell.Jsonable;
+import io.github.rogerhowell.exceptions.ParameterValidationException;
+import io.github.rogerhowell.util.BbExtractionUtil;
 import io.github.rogerhowell.util.FileUtil;
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.loader.SchemaLoader;
@@ -8,6 +10,7 @@ import org.json.JSONObject;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.ZonedDateTime;
 
 /**
  * A class to model and manipulate a
@@ -15,8 +18,12 @@ import java.nio.file.Path;
 public class BbExportZip implements Jsonable {
     private static final boolean DEFAULT_VERIFY_FILE_EXISTS = true;
 
-    private final Path    path;
-    private       boolean isFileExistenceChecked;
+    private final Path          path;
+    private final String        moduleName;
+    private final String        cohortYear;
+    private final String        taskName;
+    private final ZonedDateTime exportTimestamp;
+    private       boolean       isFileExistenceChecked;
 
 
     public BbExportZip(final Path path) {
@@ -25,15 +32,28 @@ public class BbExportZip implements Jsonable {
 
 
     public BbExportZip(final Path path, final boolean verifyFileExists) {
+        if (path == null) {
+            throw new ParameterValidationException("Path must not be null.");
+        }
+
         this.isFileExistenceChecked = false;
         if (verifyFileExists) {
             if (!Files.exists(path)) {
-                throw new IllegalArgumentException("Flag to verify file existence set to true, and file not found at the given path: " + path.toString());
+                throw new ParameterValidationException("Flag to verify file existence set to true, and file not found at the given path: " + path.toString());
             } else {
                 this.isFileExistenceChecked = true;
             }
         }
+
+
+        final String filename = path.getFileName().toString();
+
         this.path = path;
+        this.moduleName = BbExtractionUtil.bbExportFile_moduleCode(filename);
+        this.cohortYear = BbExtractionUtil.bbExportFile_cohortYear(filename);
+        this.taskName = BbExtractionUtil.bbExportFile_taskName(filename);
+        this.exportTimestamp = BbExtractionUtil.bbExportFile_TimestampToZonedDateTime(filename);
+
     }
 
 
