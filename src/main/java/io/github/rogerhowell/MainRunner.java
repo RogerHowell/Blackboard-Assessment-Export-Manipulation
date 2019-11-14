@@ -2,6 +2,7 @@ package io.github.rogerhowell;
 
 import io.github.rogerhowell.model.BbExportZip;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -9,10 +10,10 @@ public class MainRunner {
 
 
     public static void doProgram(final Path pathToZip, final Path dirToExportTo) {
-        if (!pathToZip.toFile().exists()) {
+        if (!Files.exists(pathToZip)) {
             throw new IllegalArgumentException("Path to the zip file must exist.");
         }
-        if (dirToExportTo.toFile().exists()) {
+        if (Files.exists(dirToExportTo)) {
             // TODO: Make this overridable by a flag (currently playing safe to prevent accidental deletion/overwriting)
             throw new IllegalArgumentException("Export dir already exists -- exiting to prevent changing/deletion of data.");
         }

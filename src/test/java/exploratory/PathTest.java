@@ -5,6 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -49,7 +50,7 @@ public class PathTest {
     public void test_ResourcesPath_backSlash(final String pathString) {
         final Path path = Paths.get(pathString);
         assumeTrue(
-                path.toFile().exists(),
+                Files.exists(path),
                 "File expected to exist (but doesn't) " +
                 "\n - pathString:   " + pathString + "" +
                 "\n - absolutePath: " + path.toAbsolutePath().toString()
@@ -67,7 +68,7 @@ public class PathTest {
     public void test_resourcesPath_forwardSlash(final String pathString) {
         final Path path = Paths.get(pathString);
         assumeTrue(
-                path.toFile().exists(),
+                Files.exists(path),
                 "File expected to exist (but doesn't) " +
                 "\n - pathString:   " + pathString + "" +
                 "\n - absolutePath: " + path.toAbsolutePath().toString()

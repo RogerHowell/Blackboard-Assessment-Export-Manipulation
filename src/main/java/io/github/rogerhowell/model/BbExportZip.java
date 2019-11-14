@@ -6,6 +6,7 @@ import org.everit.json.schema.Schema;
 import org.everit.json.schema.loader.SchemaLoader;
 import org.json.JSONObject;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
@@ -26,7 +27,7 @@ public class BbExportZip implements Jsonable {
     public BbExportZip(final Path path, final boolean verifyFileExists) {
         this.isFileExistenceChecked = false;
         if (verifyFileExists) {
-            if (!path.toFile().exists()) {
+            if (!Files.exists(path)) {
                 throw new IllegalArgumentException("Flag to verify file existence set to true, and file not found at the given path: " + path.toString());
             } else {
                 this.isFileExistenceChecked = true;
@@ -37,7 +38,7 @@ public class BbExportZip implements Jsonable {
 
 
     public boolean fileExists() {
-        return this.path.toFile().exists();
+        return Files.exists(this.path);
     }
 
 
@@ -58,7 +59,7 @@ public class BbExportZip implements Jsonable {
         final JSONObject jsonObject = new JSONObject();
         jsonObject.put("is_file_existence_checked", this.isFileExistenceChecked());
         jsonObject.put("file_exists", this.fileExists());
-        jsonObject.put("path", this.getPath().toString());
+        jsonObject.put("path", FileUtil.pathToString(this.getPath()));
 
         return jsonObject;
     }

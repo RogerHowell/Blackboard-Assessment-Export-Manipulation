@@ -3,8 +3,10 @@ package io.github.rogerhowell.util;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -31,6 +33,76 @@ public class FileUtil {
             e.printStackTrace();
             throw new IllegalArgumentException("Given path to json file could not be accessed (missing, invalid permissions, or perhaps not relative to the resource root?)");
         }
+    }
+
+
+    /**
+     * @param path               Given path
+     * @param directorySeparator The separator to use
+     * @return A normalised path to the given directory separator.
+     */
+    public static String pathToString(final Path path, final String directorySeparator) {
+        final StringBuilder sb = new StringBuilder();
+
+        if (path.toString().equalsIgnoreCase("")) {
+            return "";
+        }
+
+        // Handle leading slash character
+        if (path.startsWith(Paths.get("/"))) {
+            sb.append(directorySeparator);
+        }
+
+        // Handle each of the segments
+        for (int i = 0; i < path.getNameCount(); i++) {
+            final Path pathSegment = path.getName(i);
+            sb.append(pathSegment);
+
+            // Only append a directory separator if we're not the final pathSegment
+            if (i < path.getNameCount() - 1) {
+                sb.append(directorySeparator);
+            }
+        }
+
+        // If the path is a directory, add a trailing slash
+        final boolean isDirectory = Files.isDirectory(path);
+        if (isDirectory && path.getNameCount() > 0) {
+            sb.append(directorySeparator);
+        }
+
+        return sb.toString();
+    }
+
+
+    /**
+     * Defaults to using the `/` character, which safely works on Windows/Unix/MacOS
+     *
+     * @param path Given path
+     * @return A normalised path to the given directory separator.
+     */
+    public static String pathToString(final Path path) {
+        final String defaultdirectorySeparator = "/";
+        return FileUtil.pathToString(path, defaultdirectorySeparator);
+    }
+
+
+    /**
+     * @param path Given path
+     * @return A normalised path to the given directory separator.
+     */
+    public static String pathToString2(final Path path) {
+        final String defaultdirectorySeparator = "/";
+        return path.toString().replaceAll(File.separator, defaultdirectorySeparator);
+    }
+
+
+    /**
+     * @param path               Given path
+     * @param directorySeparator The separator to use
+     * @return A normalised path to the given directory separator.
+     */
+    public static String pathToString2(final Path path, final String directorySeparator) {
+        return path.toString().replaceAll(File.separator.replaceAll("\\\\", "\\\\\\\\"), directorySeparator);
     }
 
 

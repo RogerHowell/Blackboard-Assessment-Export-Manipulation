@@ -132,10 +132,11 @@ public class BbExportZipTest {
         final BbExportZip bbExport = new BbExportZip(path, false);
 
         final String expected = "{\n" +
-                                "  \"path\": \"\\\\\",\n" +
+                                "  \"path\": \"/\",\n" +
                                 "  \"file_exists\": true,\n" +
                                 "  \"is_file_existence_checked\": false\n" +
                                 "}";
+
         final JSONObject actual = bbExport.toJson();
         JSONAssert.assertEquals(expected, actual, true);
     }
@@ -147,7 +148,7 @@ public class BbExportZipTest {
         final BbExportZip bbExport = new BbExportZip(path, true);
 
         final String expected = "{\n" +
-                                "  \"path\": \"\\\\\",\n" +
+                                "  \"path\": \"/\",\n" +
                                 "  \"file_exists\": true,\n" +
                                 "  \"is_file_existence_checked\": true\n" +
                                 "}";
