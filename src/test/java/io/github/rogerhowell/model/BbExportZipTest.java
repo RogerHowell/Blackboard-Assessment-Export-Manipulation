@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import static io.github.rogerhowell.util.FileUtil.resourcePathTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -110,6 +111,17 @@ public class BbExportZipTest {
         final Path        path     = resourcePathTest(BbExportZipTest.FILE_PATH_EMPTY_ZIP);
         final BbExportZip bbExport = new BbExportZip(path, true);
 
+        final Schema schema = bbExport.getSchema();
+
+        assertNotNull(schema);
+    }
+
+
+    @Test
+    public void test_schemaValidation_schemaExecutes() {
+        final Path        path     = resourcePathTest(BbExportZipTest.FILE_PATH_EMPTY_ZIP);
+        final BbExportZip bbExport = new BbExportZip(path, true);
+
         final Schema     schema     = bbExport.getSchema();
         final JSONObject jsonObject = bbExport.toJson();
 
@@ -131,13 +143,20 @@ public class BbExportZipTest {
         final Path        path     = resourcePathTest(BbExportZipTest.FILE_PATH_EMPTY_ZIP);
         final BbExportZip bbExport = new BbExportZip(path, false);
 
+        //language=JSON
         final String expected = "{\n" +
-                                "  \"path\": \"src/test/resources/" + BbExportZipTest.FILE_PATH_EMPTY_ZIP + "\",\n" +
+                                "  \"task_name\": \"Empty20Task\",\n" +
+                                "  \"path\": \"src/test/resources/empty_zip/gradebook_2019_CS9999_Empty20Task_2019-11-08-21-41-57.zip\",\n" +
+                                "  \"cohort_year\": \"2019\",\n" +
                                 "  \"file_exists\": true,\n" +
-                                "  \"is_file_existence_checked\": false\n" +
+                                "  \"is_file_existence_checked\": false,\n" +
+                                "  \"module_name\": \"CS9999\",\n" +
+                                "  \"export_timestamp\": \"2019-11-08T21:41:57Z\",\n" +
+                                "  \"export_timestamp_epoch_seconds\": 1573249317\n" +
                                 "}";
 
         final JSONObject actual = bbExport.toJson();
+        System.out.println("actual.toString(2) = " + actual.toString(2));
         JSONAssert.assertEquals(expected, actual, true);
     }
 
@@ -147,12 +166,20 @@ public class BbExportZipTest {
         final Path        path     = resourcePathTest(BbExportZipTest.FILE_PATH_EMPTY_ZIP);
         final BbExportZip bbExport = new BbExportZip(path, true);
 
+        //language=JSON
         final String expected = "{\n" +
-                                "  \"path\": \"src/test/resources/" + BbExportZipTest.FILE_PATH_EMPTY_ZIP + "\",\n" +
+                                "  \"task_name\": \"Empty20Task\",\n" +
+                                "  \"path\": \"src/test/resources/empty_zip/gradebook_2019_CS9999_Empty20Task_2019-11-08-21-41-57.zip\",\n" +
+                                "  \"cohort_year\": \"2019\",\n" +
                                 "  \"file_exists\": true,\n" +
-                                "  \"is_file_existence_checked\": true\n" +
+                                "  \"is_file_existence_checked\": true,\n" +
+                                "  \"module_name\": \"CS9999\",\n" +
+                                "  \"export_timestamp\": \"2019-11-08T21:41:57Z\",\n" +
+                                "  \"export_timestamp_epoch_seconds\": 1573249317\n" +
                                 "}";
+
         final JSONObject actual = bbExport.toJson();
+        System.out.println("actual.toString(2) = " + actual.toString(2));
         JSONAssert.assertEquals(expected, actual, true);
     }
 

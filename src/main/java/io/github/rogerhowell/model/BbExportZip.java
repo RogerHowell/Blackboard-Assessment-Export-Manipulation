@@ -62,6 +62,21 @@ public class BbExportZip implements Jsonable {
     }
 
 
+    private String getCohortYear() {
+        return this.cohortYear;
+    }
+
+
+    private ZonedDateTime getExportTimestamp() {
+        return this.exportTimestamp;
+    }
+
+
+    private String getModuleName() {
+        return this.moduleName;
+    }
+
+
     public Path getPath() {
         return this.path;
     }
@@ -80,8 +95,18 @@ public class BbExportZip implements Jsonable {
         jsonObject.put("is_file_existence_checked", this.isFileExistenceChecked());
         jsonObject.put("file_exists", this.fileExistsOnDisk());
         jsonObject.put("path", FileUtil.pathToNormalisedString(this.getPath()));
+        jsonObject.put("module_name", this.getModuleName());
+        jsonObject.put("cohort_year", this.getCohortYear());
+        jsonObject.put("task_name", this.getTaskName());
+        jsonObject.put("export_timestamp", this.getExportTimestamp().toInstant().toString());
+        jsonObject.put("export_timestamp_epoch_seconds", this.getExportTimestamp().toInstant().getEpochSecond());
 
         return jsonObject;
+    }
+
+
+    private String getTaskName() {
+        return this.taskName;
     }
 
 

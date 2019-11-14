@@ -13,11 +13,27 @@
     },
     "is_file_existence_checked": {
       "type": "boolean"
+    },
+    "module_name": {
+      "type": "string"
+    },
+    "cohort_year": {
+      "type": "string"
+    },
+    "task_name": {
+      "type": "string"
+    },
+    "export_timestamp": {
+      "type": "string"
     }
   },
   "required": [
     "path",
     "file_exists",
-    "is_file_existence_checked"
+    "is_file_existence_checked",
+    "module_name",
+    "cohort_year",
+    "task_name",
+    "export_timestamp"
   ]
 }
