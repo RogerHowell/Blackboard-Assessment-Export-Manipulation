@@ -30,6 +30,15 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.5.2</version>
+            <scope>test</scope>
+        </dependency>
+
+
+
         <!-- License: The Apache Software License, Version 2.0 - https://mvnrepository.com/artifact/org.everit.json/org.everit.json.schema/1.5.1 -->
         <!-- https://mvnrepository.com/artifact/org.everit.json/org.everit.json.schema -->
         <dependency>
