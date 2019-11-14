@@ -1,4 +1,4 @@
-package io.github.rogerhowell;
+package io.github.rogerhowell.runner;
 
 import io.github.rogerhowell.exceptions.ParameterValidationFailException;
 import io.github.rogerhowell.model.BbExportZip;
