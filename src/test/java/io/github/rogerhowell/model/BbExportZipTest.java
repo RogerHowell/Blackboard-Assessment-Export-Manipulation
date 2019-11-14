@@ -1,6 +1,8 @@
 package io.github.rogerhowell.model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -99,4 +101,35 @@ public class BbExportZipTest {
                     "\n - absolutePath: " + path.toAbsolutePath().toString()
         );
     }
+
+
+    @Test
+    public void test_toJson_genericFileVerifyFalse() {
+        final Path        path     = testResourcePath("/");
+        final BbExportZip bbExport = new BbExportZip(path, false);
+
+        final String expected = "{\n" +
+                                "  \"path\": \"\\\\\",\n" +
+                                "  \"file_exists\": true,\n" +
+                                "  \"is_file_existence_checked\": false\n" +
+                                "}";
+        final JSONObject actual = bbExport.toJson();
+        JSONAssert.assertEquals(expected, actual, true);
+    }
+
+
+    @Test
+    public void test_toJson_genericFileVerifyTrue() {
+        final Path        path     = testResourcePath("/");
+        final BbExportZip bbExport = new BbExportZip(path, true);
+
+        final String expected = "{\n" +
+                                "  \"path\": \"\\\\\",\n" +
+                                "  \"file_exists\": true,\n" +
+                                "  \"is_file_existence_checked\": true\n" +
+                                "}";
+        final JSONObject actual = bbExport.toJson();
+        JSONAssert.assertEquals(expected, actual, true);
+    }
+
 }
