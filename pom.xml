@@ -38,13 +38,20 @@
         </dependency>
 
 
-
         <!-- License: The Apache Software License, Version 2.0 - https://mvnrepository.com/artifact/org.everit.json/org.everit.json.schema/1.5.1 -->
-        <!-- https://mvnrepository.com/artifact/org.everit.json/org.everit.json.schema -->
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.everit.json/org.everit.json.schema &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.everit.json</groupId>-->
+        <!--            <artifactId>org.everit.json.schema</artifactId>-->
+        <!--            <version>1.5.1</version>-->
+        <!--        </dependency>-->
+
+        <!-- Fork of a later version as official version is released via jitpack, not maven central (note latest version of the one above is 1.5.1 - dated May 2017)  -->
+        <!-- https://mvnrepository.com/artifact/com.github.erosb/everit-json-schema -->
         <dependency>
-            <groupId>org.everit.json</groupId>
-            <artifactId>org.everit.json.schema</artifactId>
-            <version>1.5.1</version>
+            <groupId>com.github.erosb</groupId>
+            <artifactId>everit-json-schema</artifactId>
+            <version>1.12.0</version>
         </dependency>
 
 
