@@ -63,15 +63,16 @@ public class BbExportZipTest {
             );
         }
 
-        // Output list of files in dir:
-
-        System.out.println("parentDir:    " + parentDir);
-        for (final File file : files) {
-            System.out.println(" \\-- file = " + file);
+        // Output list of files in parent dir, **IF** the searched-for file is not found:
+        if (!exists) {
+            System.out.println("parentDir:    " + parentDir);
+            for (final File file : files) {
+                System.out.println(" \\-- file = " + file);
+            }
         }
 
         assertTrue(exists,
-                   "File should exist." +
+                   "File must exist." +
                    "\n - pathString:   " + pathString +
                    "\n - absolutePath: " + path.toAbsolutePath().toString()
         );
@@ -93,7 +94,7 @@ public class BbExportZipTest {
         }
 
         assertFalse(exists,
-                    "File should **NOT** exist!!" +
+                    "File must **NOT** exist!!" +
                     "\n - pathString:   " + pathString +
                     "\n - absolutePath: " + path.toAbsolutePath().toString()
         );
