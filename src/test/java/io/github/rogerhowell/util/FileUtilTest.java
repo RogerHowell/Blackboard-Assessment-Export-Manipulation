@@ -31,7 +31,7 @@ public class FileUtilTest {
             e.printStackTrace();
         }
 
-        final String customToString = FileUtil.pathToString(path, "/");
+        final String customToString = FileUtil.pathToNormalisedString(path, "/");
 
         assumeTrue(canonicalFile != null, "Halting -- error getting canonical file for " + pathString);
 
@@ -146,7 +146,7 @@ public class FileUtilTest {
     @Test
     public void test_pathToUtil_emptyString() {
         final Path   path   = Paths.get("");
-        final String output = FileUtil.pathToString(path);
+        final String output = FileUtil.pathToNormalisedString(path);
 
         assertEquals("", output);
     }
@@ -155,7 +155,7 @@ public class FileUtilTest {
     @Test
     public void test_pathToUtil_noLeadingSlash() {
         final Path   path   = Paths.get("src");
-        final String output = FileUtil.pathToString(path);
+        final String output = FileUtil.pathToNormalisedString(path);
 
         assertEquals("src/", output);
     }
@@ -167,7 +167,7 @@ public class FileUtilTest {
     @Test
     public void test_pathToUtil_withLeadingSlash() {
         final Path   path   = Paths.get("/src");
-        final String output = FileUtil.pathToString(path);
+        final String output = FileUtil.pathToNormalisedString(path);
 
 
 //        assertEquals("/src/", output);

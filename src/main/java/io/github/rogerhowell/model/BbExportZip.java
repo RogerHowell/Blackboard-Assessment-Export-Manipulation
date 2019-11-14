@@ -37,7 +37,7 @@ public class BbExportZip implements Jsonable {
     }
 
 
-    public boolean fileExists() {
+    public boolean fileExistsOnDisk() {
         return Files.exists(this.path);
     }
 
@@ -58,8 +58,8 @@ public class BbExportZip implements Jsonable {
     public JSONObject toJson() {
         final JSONObject jsonObject = new JSONObject();
         jsonObject.put("is_file_existence_checked", this.isFileExistenceChecked());
-        jsonObject.put("file_exists", this.fileExists());
-        jsonObject.put("path", FileUtil.pathToString(this.getPath()));
+        jsonObject.put("file_exists", this.fileExistsOnDisk());
+        jsonObject.put("path", FileUtil.pathToNormalisedString(this.getPath()));
 
         return jsonObject;
     }

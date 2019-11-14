@@ -9,7 +9,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import java.io.File;
 import java.nio.file.Path;
 
-import static io.github.rogerhowell.util.FileUtil.testResourcePath;
+import static io.github.rogerhowell.util.FileUtil.resourcePathTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -21,7 +21,7 @@ public class BbExportZipTest {
 
     @Test
     public void test_constructor_basicPath() {
-        final Path        path     = testResourcePath("/");
+        final Path        path     = resourcePathTest("/");
         final BbExportZip bbExport = new BbExportZip(path, false);
 
         assertEquals(path, bbExport.getPath());
@@ -38,7 +38,7 @@ public class BbExportZipTest {
     @Test
     public void test_constructor_verifyFileExists_existingFile() {
         final String pathString = "empty_zip/gradebook_2019_CS9999_Empty20Task_2019-11-08-21-41-57.zip";
-        final Path   path       = testResourcePath(pathString);
+        final Path   path       = resourcePathTest(pathString);
 
         boolean exists = true;
 
@@ -86,7 +86,7 @@ public class BbExportZipTest {
     @Test
     public void test_constructor_verifyFileExists_nonExistentFile() {
         final String pathString = "/non-existent.zip";
-        final Path   path       = testResourcePath(pathString);
+        final Path   path       = resourcePathTest(pathString);
 
         boolean exists = true;
 
@@ -107,7 +107,7 @@ public class BbExportZipTest {
 
     @Test
     public void test_schemaValidation_getSchema() {
-        final Path        path     = testResourcePath("/");
+        final Path        path     = resourcePathTest("/");
         final BbExportZip bbExport = new BbExportZip(path, true);
 
         final Schema     schema     = bbExport.getSchema();
@@ -128,11 +128,11 @@ public class BbExportZipTest {
 
     @Test
     public void test_toJson_genericFileVerifyFalse() {
-        final Path        path     = testResourcePath("/");
+        final Path        path     = resourcePathTest("/");
         final BbExportZip bbExport = new BbExportZip(path, false);
 
         final String expected = "{\n" +
-                                "  \"path\": \"/\",\n" +
+                                "  \"path\": \"src/test/resources/\",\n" +
                                 "  \"file_exists\": true,\n" +
                                 "  \"is_file_existence_checked\": false\n" +
                                 "}";
@@ -144,11 +144,11 @@ public class BbExportZipTest {
 
     @Test
     public void test_toJson_genericFileVerifyTrue() {
-        final Path        path     = testResourcePath("/");
+        final Path        path     = resourcePathTest("/");
         final BbExportZip bbExport = new BbExportZip(path, true);
 
         final String expected = "{\n" +
-                                "  \"path\": \"/\",\n" +
+                                "  \"path\": \"src/test/resources/\",\n" +
                                 "  \"file_exists\": true,\n" +
                                 "  \"is_file_existence_checked\": true\n" +
                                 "}";
