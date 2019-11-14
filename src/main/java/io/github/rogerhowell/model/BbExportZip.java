@@ -12,6 +12,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.ZonedDateTime;
 
+import static io.github.rogerhowell.util.BbExtractionUtil.ISO_INSTANT_MILLIS;
+
 /**
  * A class to model and manipulate a
  */
@@ -98,8 +100,8 @@ public class BbExportZip implements Jsonable {
         jsonObject.put("module_name", this.getModuleName());
         jsonObject.put("cohort_year", this.getCohortYear());
         jsonObject.put("task_name", this.getTaskName());
-        jsonObject.put("export_timestamp", this.getExportTimestamp().toInstant().toString());
-        jsonObject.put("export_timestamp_epoch_seconds", this.getExportTimestamp().toInstant().getEpochSecond());
+        jsonObject.put("export_timestamp", ISO_INSTANT_MILLIS.format(this.getExportTimestamp()));
+        jsonObject.put("export_timestamp_epoch_millis", this.getExportTimestamp().toInstant().toEpochMilli());
 
         return jsonObject;
     }

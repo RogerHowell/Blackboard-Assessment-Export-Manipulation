@@ -164,8 +164,8 @@ public class BbExportZipTest implements JsonableTest {
                                 "  \"file_exists\": true,\n" +
                                 "  \"is_file_existence_checked\": false,\n" +
                                 "  \"module_name\": \"CS9999\",\n" +
-                                "  \"export_timestamp\": \"2019-11-08T21:41:57Z\",\n" +
-                                "  \"export_timestamp_epoch_seconds\": 1573249317\n" +
+                                "  \"export_timestamp\": \"2019-11-08T21:41:57.000Z\",\n" +
+                                "  \"export_timestamp_epoch_millis\": 1573249317000\n" +
                                 "}";
 
         final JSONObject actual = bbExport.toJson();
@@ -187,8 +187,8 @@ public class BbExportZipTest implements JsonableTest {
                                 "  \"file_exists\": true,\n" +
                                 "  \"is_file_existence_checked\": true,\n" +
                                 "  \"module_name\": \"CS9999\",\n" +
-                                "  \"export_timestamp\": \"2019-11-08T21:41:57Z\",\n" +
-                                "  \"export_timestamp_epoch_seconds\": 1573249317\n" +
+                                "  \"export_timestamp\": \"2019-11-08T21:41:57.000Z\",\n" +
+                                "  \"export_timestamp_epoch_millis\": 1573249317000\n" +
                                 "}";
 
         final JSONObject actual = bbExport.toJson();

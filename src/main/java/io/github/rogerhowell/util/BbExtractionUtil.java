@@ -6,6 +6,7 @@ import io.github.rogerhowell.exceptions.ParameterValidationFailException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,6 +36,10 @@ public class BbExtractionUtil {
 
 
     public static final DateTimeFormatter BB_EXPORT_FILE_TIMESTAMP_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+
+    public static final DateTimeFormatter ISO_INSTANT_MILLIS = new DateTimeFormatterBuilder().parseCaseInsensitive()
+                                                                                             .appendInstant(3)
+                                                                                             .toFormatter();
 
 
     public static ZonedDateTime bbExportFile_TimestampToZonedDateTime(final String filename) {

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://example.com/product.schema.json",
+  "$id": "https://github.com/RogerHowell/Blackboard-Assessment-Export-Manipulation/blob/master/src/main/resources/json_schema/BbExportZip.schema.json",
   "title": "Blackboard export zip file",
   "description": "A representation of the exported zip file containing assignment submissions.",
   "type": "object",
@@ -24,7 +24,12 @@
       "type": "string"
     },
     "export_timestamp": {
-      "type": "string"
+      "type": "string",
+      "pattern": "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z"
+    },
+    "export_timestamp_epoch_millis": {
+      "type": "integer",
+      "minimum": 0
     }
   },
   "required": [
@@ -34,6 +39,7 @@
     "module_name",
     "cohort_year",
     "task_name",
-    "export_timestamp"
+    "export_timestamp",
+    "export_timestamp_epoch_millis"
   ]
 }
