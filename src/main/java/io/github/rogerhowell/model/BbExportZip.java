@@ -1,7 +1,9 @@
 package io.github.rogerhowell.model;
 
 import io.github.rogerhowell.Jsonable;
+import io.github.rogerhowell.util.FileUtil;
 import org.everit.json.schema.Schema;
+import org.everit.json.schema.loader.SchemaLoader;
 import org.json.JSONObject;
 
 import java.nio.file.Path;
@@ -46,7 +48,8 @@ public class BbExportZip implements Jsonable {
 
     @Override
     public Schema getSchema() {
-        throw new IllegalStateException("Not yet implemented.");
+        final JSONObject schemaJson = FileUtil.jsonObjectFromResourcePath("/json_schema/BbExportZip.schema.json");
+        return SchemaLoader.load(schemaJson);
     }
 
 

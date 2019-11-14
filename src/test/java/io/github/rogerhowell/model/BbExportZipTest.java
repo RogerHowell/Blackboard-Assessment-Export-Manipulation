@@ -1,5 +1,7 @@
 package io.github.rogerhowell.model;
 
+import org.everit.json.schema.Schema;
+import org.everit.json.schema.ValidationException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -7,7 +9,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import java.io.File;
 import java.nio.file.Path;
 
-import static io.github.rogerhowell.util.TestUtil.testResourcePath;
+import static io.github.rogerhowell.util.FileUtil.testResourcePath;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -15,6 +17,32 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class BbExportZipTest {
+
+
+    @Test
+    public void info_schemaValidation_getSchema() {
+
+        final Path        path     = testResourcePath("/");
+        final BbExportZip bbExport = new BbExportZip(path, true);
+
+        final Schema     schema     = bbExport.getSchema();
+        final JSONObject jsonObject = bbExport.toJson();
+
+        System.out.println("bbExport.getSchema() = " + bbExport.getSchema().toString());
+
+        try {
+            // Do validation
+            schema.validate(jsonObject);
+
+            // Try to get some info out?
+            final String string = schema.toString();
+            System.out.println("string = " + string);
+
+        } catch (final ValidationException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
 
 
     @Test
