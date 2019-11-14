@@ -6,13 +6,17 @@
 
     <groupId>uk.co.rogerhowell</groupId>
     <artifactId>blackboard-assessment-export-manipulation</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
 
 
     <properties>
-        <java.version>1.11</java.version>
-        <maven.compiler.target>1.11</maven.compiler.target>
-        <maven.compiler.source>1.11</maven.compiler.source>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <java.version>8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
     </properties>
 
 
@@ -26,12 +30,30 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- License: The Apache Software License, Version 2.0 - https://mvnrepository.com/artifact/org.everit.json/org.everit.json.schema/1.5.1 -->
         <dependency>
-            <groupId>com.github.everit-org.json-schema</groupId>
-            <artifactId>org.everit.json.schema</artifactId>
-            <version>1.11.0</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.5.2</version>
+            <scope>test</scope>
         </dependency>
+
+
+        <!-- License: The Apache Software License, Version 2.0 - https://mvnrepository.com/artifact/org.everit.json/org.everit.json.schema/1.5.1 -->
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.everit.json/org.everit.json.schema &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.everit.json</groupId>-->
+        <!--            <artifactId>org.everit.json.schema</artifactId>-->
+        <!--            <version>1.5.1</version>-->
+        <!--        </dependency>-->
+
+        <!-- Fork of a later version as official version is released via jitpack, not maven central (note latest version of the one above is 1.5.1 - dated May 2017)  -->
+        <!-- https://mvnrepository.com/artifact/com.github.erosb/everit-json-schema -->
+        <dependency>
+            <groupId>com.github.erosb</groupId>
+            <artifactId>everit-json-schema</artifactId>
+            <version>1.12.0</version>
+        </dependency>
+
 
         <!-- License: referred to as the JSON license (worded identically to the MIT license) - use without limitation, as long as the copyright notice is retained https://github.com/stleary/JSON-java/blob/master/LICENSE - https://mvnrepository.com/artifact/org.json/json/20190722 - http://json.org/license.html -->
         <dependency>
@@ -48,5 +70,16 @@
         </dependency>
 
     </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

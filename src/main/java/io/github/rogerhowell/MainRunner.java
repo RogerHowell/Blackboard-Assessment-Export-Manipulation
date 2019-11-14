@@ -1,18 +1,19 @@
 package io.github.rogerhowell;
 
+import io.github.rogerhowell.model.BbExportZip;
+
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class MainRunner {
 
 
     public static void doProgram(final Path pathToZip, final Path dirToExportTo) {
-        if (!pathToZip.toFile().exists()) {
+        if (!Files.exists(pathToZip)) {
             throw new IllegalArgumentException("Path to the zip file must exist.");
         }
-        if (dirToExportTo.toFile().exists()) {
+        if (Files.exists(dirToExportTo)) {
             // TODO: Make this overridable by a flag (currently playing safe to prevent accidental deletion/overwriting)
             throw new IllegalArgumentException("Export dir already exists -- exiting to prevent changing/deletion of data.");
         }
@@ -24,36 +25,36 @@ public class MainRunner {
 
 
         // Unzip the exported zip folder
-        final BbExport       bbExport       = new BbExport(pathToZip);
-        final SubmissionsDir submissionsDir = bbExport.unzipTo(dirToExportTo, unzip_createDirAndParentDirsIfNotExists);
-
-        // Rearrange the submitted files to be one directory per submission (optionally nest multiple submissions by same submitter)
-        submissionsDir.doRearrrangeOfFilesOnDisk(arrangeFiles_alsoGroupSubmissionsBySubmitter, arrangeFiles_skipOnError);
-
-
-        // Do stuff (system related)
-        // -- The above simply does moving of files -- this section manipulates/changes/creates files
-        final List<SubmissionDir> submissionDirs = submissionsDir.getSubmissionDirs();
-        submissionDirs.foreach(submissionDir -> {
-            submissionDir.applyTransform(Transforms::undoBlackboardFileRenaming); // e.g. remove prefixes, and undo encoding (e.g. spaces being encoded as `20` -- a `%20` with the `%` stripped)
-            submissionDir.applyTransform(Transforms::recursiveUnzipAll); // If the submission contains zip folders, unzip those
-            submissionDir.applyTransform(Transforms::generateMetadataFiles); // e.g. a machine readable `.json` or `.xml` file representing this submission -- an extension beyond the blackboard-provided `.txt` file
-        });
-
-
-        // Do stuff (user related)
-        // -- This is where the "user" (of this code) will be given a collection of submissions
-        // -- ... which will then be the "fun stuff" in the codebase of whatever actually uses this project
-        final List<Submission> submissions = submissionsDirs
-                .stream()
-                .map(submissionDir -> submissionDir.getSubmission())
-                .collect(Collectors.toList());
-
-        submissions.foreach(submission -> {
-            submission.applyTransform(Transforms::transpilePdes); // "Processing" has `.pde` files that get collated into inner classes -- transpile into a single `.java` file
-            submission.applyTransform(Transforms::analyseJavaFiles); // Perhaps extract the AST and
-            submission.applyTransform(Transforms::extractJavaFilesToDatabase); // Perhaps extract the AST and upload it to a database
-        });
+        final BbExportZip bbExportZip = new BbExportZip(pathToZip);
+//        final SubmissionsDir submissionsDir = bbExportZip.unzipTo(dirToExportTo, unzip_createDirAndParentDirsIfNotExists);
+//
+//        // Rearrange the submitted files to be one directory per submission (optionally nest multiple submissions by same submitter)
+//        submissionsDir.doRearrrangeOfFilesOnDisk(arrangeFiles_alsoGroupSubmissionsBySubmitter, arrangeFiles_skipOnError);
+//
+//
+//        // Do stuff (system related)
+//        // -- The above simply does moving of files -- this section manipulates/changes/creates files
+//        final List<SubmissionDir> submissionDirs = submissionsDir.getSubmissionDirs();
+//        submissionDirs.foreach(submissionDir -> {
+//            submissionDir.applyTransform(Transforms::undoBlackboardFileRenaming); // e.g. remove prefixes, and undo encoding (e.g. spaces being encoded as `20` -- a `%20` with the `%` stripped)
+//            submissionDir.applyTransform(Transforms::recursiveUnzipAll); // If the submission contains zip folders, unzip those
+//            submissionDir.applyTransform(Transforms::generateMetadataFiles); // e.g. a machine readable `.json` or `.xml` file representing this submission -- an extension beyond the blackboard-provided `.txt` file
+//        });
+//
+//
+//        // Do stuff (user related)
+//        // -- This is where the "user" (of this code) will be given a collection of submissions
+//        // -- ... which will then be the "fun stuff" in the codebase of whatever actually uses this project
+//        final List<Submission> submissions = submissionsDirs
+//                .stream()
+//                .map(submissionDir -> submissionDir.getSubmission())
+//                .collect(Collectors.toList());
+//
+//        submissions.foreach(submission -> {
+//            submission.applyTransform(Transforms::transpilePdes); // "Processing" has `.pde` files that get collated into inner classes -- transpile into a single `.java` file
+//            submission.applyTransform(Transforms::analyseJavaFiles); // Perhaps extract the AST and
+//            submission.applyTransform(Transforms::extractJavaFilesToDatabase); // Perhaps extract the AST and upload it to a database
+//        });
 
     }
 
