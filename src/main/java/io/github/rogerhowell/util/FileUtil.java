@@ -14,6 +14,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static io.github.rogerhowell.validation.Validation.DISALLOW_NULL;
+import static io.github.rogerhowell.validation.Validation.FILE_MUST_EXIST;
+import static io.github.rogerhowell.validation.Validation.MUST_BE_DIRECTORY;
+
 public class FileUtil {
 
     public static final Path RESOURCE_ROOT_MAIN = Paths.get("src/main/resources");
@@ -145,9 +149,7 @@ public class FileUtil {
      * @return
      */
     public static Path getRelativePathNormalised(final Path baseDirectory, final String pathString) {
-        if (!Files.isDirectory(baseDirectory)) {
-            throw new ParameterValidationFailException("Given path to the base directory MUST be a directory.");
-        }
+        MUST_BE_DIRECTORY.validate(baseDirectory);
 
         try {
             final Path    newPathNormalised = Paths.get(baseDirectory.toString(), pathString).normalize();
@@ -214,18 +216,15 @@ public class FileUtil {
      * @param pathToFile A string showing the path **relative to the resource root, but starting with a `/` ...**.
      * @return a JSONObject using the contents of the file specified.
      */
-    public static JSONObject jsonObjectFromResourcePath(final String pathToFile) {
-        try {
-            final Path   path     = FileUtil.resourcePathMain(pathToFile);
-            final String contents = FileUtil.getFileContentsAsString(path);
-            return new JSONObject(contents);
-        } catch (final IOException e) {
-            throw new ParameterValidationFailException(
-                    "Given path to json file could not be accessed " +
-                    "(perhaps missing, invalid permissions, or not relative to the resource root?)",
-                    e
-            );
-        }
+    public static JSONObject jsonObjectFromResourcePath(final String pathToFile) throws IOException {
+        DISALLOW_NULL.validate(pathToFile);
+
+        final Path path = FileUtil.resourcePathMain(pathToFile);
+        FILE_MUST_EXIST.validate(path);
+
+        final String contents = FileUtil.getFileContentsAsString(path);
+        return new JSONObject(contents);
+
     }
 
 
@@ -236,12 +235,10 @@ public class FileUtil {
      * @return A list of `Path` objects representing the immediate children of the given directory.
      */
     public static List<Path> listDirContents(final Path dirPath) {
-        if (dirPath == null) {
-            throw new ParameterValidationFailException("Directory contents not found - The given directory is null.");
-        }
-        if (!FileUtil.fileExistsOnDisk(dirPath)) {
-            throw new ParameterValidationFailException("Directory contents not found - The given directory does not exist on disk.");
-        }
+        DISALLOW_NULL.validate(dirPath, "The given path is null.");
+        FILE_MUST_EXIST.validate(dirPath, "The given path does not exist on disk, or is otherwise inaccessible.");
+        MUST_BE_DIRECTORY.validate(dirPath, "The given path does not refer to an accessible directory.");
+
 
         // "Returns null if this abstract pathname does not denote a directory, or if an I/O error occurs."
         final File[] dirFileContents = dirPath.toFile().listFiles();

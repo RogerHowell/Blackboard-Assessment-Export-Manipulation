@@ -24,6 +24,24 @@ public enum Validation {
             "file_exists_on_disk",
             "Parameter must be an object of type `Path` and it must exist on disk.",
             value -> ((value instanceof Path) && Files.exists((Path) value))
+    ),
+
+    FILE_MUST_NOT_EXIST(
+            "file_exists_on_disk",
+            "Parameter must be an object of type `Path` and it must exist on disk.",
+            value -> ((value instanceof Path) && Files.notExists((Path) value))
+    ),
+
+    MUST_BE_DIRECTORY(
+            "must_be_directory",
+            "Parameter must be an object of type `Path` and it must be a directory.",
+            value -> ((value instanceof Path) && Files.isDirectory((Path) value))
+    ),
+
+    MUST_BE_REGULAR_FILE(
+            "must_be_regular_file",
+            "Parameter must be an object of type `Path` and it must be a regular file.",
+            value -> ((value instanceof Path) && Files.isRegularFile((Path) value))
     );
 
 
@@ -40,17 +58,33 @@ public enum Validation {
     }
 
 
-    static void testPredicate(final Validation validation, final Object testTarget) {
-        final boolean result = validation.getPredicate().test(testTarget);
-        if (!result) {
-            throw new ParameterValidationFailException("");
-        }
+    /**
+     * Helper function to test against a value against a collection of validations (e.g. not null, and must exist).
+     *
+     * See {@link #validatePredicates(List, Object)} if you just want to throw an exception on rejection.
+     *
+     * @param validations
+     * @param testTarget
+     * @return True if all validations pass, else false.
+     */
+    static boolean testPredicates(final List<Validation> validations, final Object testTarget) {
+        return validations.stream().allMatch(validation -> validation.test(testTarget));
     }
 
 
-    static void testPredicates(final List<Validation> validations, final Object testTarget) {
+    /**
+     * Helper function to test against a value against a collection of validations (e.g. not null, and must exist).
+     *
+     * Throws an exception if any validations fail.
+     *
+     * See {@link #testPredicates(List, Object)} if you just want to test and get a true/false response, rather than throw exceptions on fail.
+     *
+     * @param validations
+     * @param testTarget
+     */
+    static void validatePredicates(final List<Validation> validations, final Object testTarget) {
         validations.forEach(validation -> {
-            Validation.testPredicate(validation, testTarget);
+            validation.validate(testTarget);
         });
     }
 
@@ -76,8 +110,14 @@ public enum Validation {
 
 
     public void validate(final Object testSubject) {
+        this.validate(testSubject, null);
+    }
+
+
+    public void validate(final Object testSubject, final String message) {
         if (!this.test(testSubject)) {
-            throw new ParameterValidationFailException(this.getDescription());
+            final String m = this.getDescription() + ((message != null) ? message : "");
+            throw new ParameterValidationFailException(m);
         }
     }
 

@@ -3,21 +3,25 @@ package io.github.rogerhowell.runner;
 import io.github.rogerhowell.model.BbExportZip;
 import io.github.rogerhowell.validation.ParameterValidationFailException;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import static io.github.rogerhowell.validation.Validation.DISALLOW_NULL;
+import static io.github.rogerhowell.validation.Validation.FILE_MUST_EXIST;
+import static io.github.rogerhowell.validation.Validation.FILE_MUST_NOT_EXIST;
 
 public class MainRunner {
 
 
     public static void doProgram(final Path pathToZip, final Path dirToExportTo) {
-        if (!Files.exists(pathToZip)) {
-            throw new ParameterValidationFailException("Path to the zip file must exist.");
-        }
-        if (Files.exists(dirToExportTo)) {
-            // TODO: Make this overridable by a flag (currently playing safe to prevent accidental deletion/overwriting)
-            throw new ParameterValidationFailException("Export dir already exists -- exiting to prevent changing/deletion of data.");
-        }
+        DISALLOW_NULL.validate(pathToZip);
+        DISALLOW_NULL.validate(dirToExportTo);
+
+        FILE_MUST_EXIST.validate(pathToZip, "Path to the zip file must exist.");
+
+        // TODO: Make this overridable by a flag (currently playing safe to prevent accidental deletion/overwriting)
+        FILE_MUST_NOT_EXIST.validate(pathToZip, "Export dir already exists -- exiting to prevent changing/deletion of data.");
+
 
         // Flags
         final boolean unzip_createDirAndParentDirsIfNotExists      = true;
@@ -86,14 +90,8 @@ public class MainRunner {
      * @param dirToExportToString
      */
     public static void runner(final String pathToZipString, final String dirToExportToString) {
-        if (pathToZipString == null) {
-            throw new ParameterValidationFailException("Path to the zip file must not be omitted.");
-        }
-
-        if (dirToExportToString == null) {
-            // TODO: Make this optional
-            throw new ParameterValidationFailException("Path to the export directory must not be omitted.");
-        }
+        DISALLOW_NULL.validate(pathToZipString, "Path to the zip file must not be omitted.");
+        DISALLOW_NULL.validate(dirToExportToString, "Path to the export directory must not be omitted. // TODO: Make this optional."); // TODO: Make this optional
 
         final Path pathToZip     = Paths.get(pathToZipString);
         final Path dirToExportTo = Paths.get(dirToExportToString);

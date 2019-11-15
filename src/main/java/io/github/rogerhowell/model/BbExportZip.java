@@ -8,6 +8,7 @@ import org.everit.json.schema.Schema;
 import org.everit.json.schema.loader.SchemaLoader;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.ZonedDateTime;
@@ -80,8 +81,13 @@ public class BbExportZip implements Jsonable {
 
     @Override
     public Schema getSchema() {
-        final JSONObject schemaJson = FileUtil.jsonObjectFromResourcePath("/json_schema/BbExportZip.schema.json");
-        return SchemaLoader.load(schemaJson);
+        try {
+            final JSONObject schemaJson = FileUtil.jsonObjectFromResourcePath("/json_schema/BbExportZip.schema.json");
+            return SchemaLoader.load(schemaJson);
+        } catch (final IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 

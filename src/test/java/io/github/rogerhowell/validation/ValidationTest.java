@@ -23,7 +23,7 @@ public class ValidationTest {
         boolean validationPassed = true;
 
         try {
-            Validation.testPredicate(validationRule, testTarget);
+            validationRule.validate(testTarget);
         } catch (final ParameterValidationFailException e) {
             validationPassed = false;
         }
